@@ -1,0 +1,1 @@
+gcc main.c display.c carracing.c -o programa
