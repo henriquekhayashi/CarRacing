@@ -1,11 +1,11 @@
 #include "carracing.h"
 #include "display.h"
 #include <windows.h>
-#define DEBUG 0
+#define DEBUG 1
 
 int main(){
 
-    char matrix [ROWS][COLUMNS];
+    char matrix [TRUE_ROWS][COLUMNS];
 
     Carro jogador;
 
@@ -17,7 +17,7 @@ int main(){
     Carro competidor;
 
     competidor.i=0;
-    competidor.j=COLUMNS/2;
+    competidor.j=COLUMNS-3;
     competidor.height = 4; 
     competidor.width = 5;
 
@@ -27,7 +27,7 @@ int main(){
 
     int tecla;
     
-    int faixa1 = 2, faixa2 = 3, aux = 0;
+    int faixa1 = 0, faixa2 = 3, aux = 0;
     
     int troca;
 
@@ -36,47 +36,49 @@ int main(){
    
     system("cls");
 
-     while(1){ 
+    //loop
+    while(1){ 
         
         
             gotoxy(0,0);
         
         //print posição do @
         #if DEBUG == 1
-            printf("@ = (%d,%d)\n", jogador.i, jogador.j);
+            printf("@ = (%d,%d)\n", competidor.i, competidor.j);
         #endif
-            printf("FAIXA1 = %d, FAIXA 2 = %d)\n", faixa1 , faixa2);
+            printf("FAIXA1 = %d, FAIXA2 = %d)\n", faixa1 , faixa2);
         
         //desenha o carro
         drawCar(matrix, &jogador, PIXEL);
         drawCar(matrix, &competidor, PIXEL);
         
-       // Sleep(100);
+        
         printMatrix(matrix, faixa1);
         
         //APAGAR
         drawCar(matrix, &jogador, EMPTY);
         drawCar(matrix, &competidor, EMPTY);
-
-        
+        m = getch();
+        /*
         aux = faixa1;
         faixa1 = faixa2;
         faixa2 = aux;
-        
+        */
 
-        
+        if(faixa1 == 0) faixa1 = 1;
+        else faixa1 = 0;
 
+        //mover o competidor para baixo na tela 
         competidor.i++;
-        if(competidor.i>ROWS+competidor.height) competidor.i = 0;
+        if(competidor.i==TRUE_ROWS) competidor.i = 0;
 
-        
         int tecla;
 
         if(kbhit()){
             tecla = getch();
             }
 
-        //MOVER
+        //Mover o carro
         switch(tecla){
             case ARROWS: 
                 if(kbhit()) tecla = getch();

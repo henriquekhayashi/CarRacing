@@ -13,7 +13,10 @@ data:19/09/2019
 
 //Configuração das dimensoes da matriz principal do jogo
 #define COLUMNS 11
-#define ROWS 30
+#define TRUE_ROWS 30
+#define ROWS TRUE_ROWS-5
+
+
 
 //Configuração de teclas
 #define ESC 27
@@ -44,12 +47,12 @@ typedef struct{
     Inicializa a matriz principal com 'espaços vazios'
 
 */
-void init(char matrix[ROWS][COLUMNS]);
+void init(char matrix[TRUE_ROWS][COLUMNS]);
 
 /*
     Mostra o conteúdo da matriz principal na tela
     do computador.
 */
-void printMatrix(char matrix[ROWS][COLUMNS], int faixa1);
+void printMatrix(char matrix[TRUE_ROWS][COLUMNS], int faixa1);
 
 void drawCar(char matrix[ROWS][COLUMNS], Carro *barra, int simbolo);

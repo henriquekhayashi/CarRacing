@@ -14,11 +14,11 @@ data:19/09/2019
 
 */
 
-void init(char matrix[ROWS][COLUMNS])
+void init(char matrix[TRUE_ROWS][COLUMNS])
 {
     int i,j;
 
-    for(i=0; i<ROWS; i++)
+    for(i=0; i<TRUE_ROWS; i++)
     {
         for(j=0; j<COLUMNS; j++)
         {
@@ -32,7 +32,7 @@ void init(char matrix[ROWS][COLUMNS])
     do computador.
 */
 
-void printMatrix(char matrix[ROWS][COLUMNS],int faixa1)
+void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
 {
     int i,j;
     //borda de cima
@@ -46,7 +46,7 @@ void printMatrix(char matrix[ROWS][COLUMNS],int faixa1)
     printf("\n");
 
     //correr pelo y da matriz
-    for(i=0; i<ROWS; i++)
+    for(i=0; i<TRUE_ROWS; i++)
     {
         //print borda esquerda
         printf("\t\t\t\t\t");
@@ -62,8 +62,8 @@ void printMatrix(char matrix[ROWS][COLUMNS],int faixa1)
         }
 
         //print borda direita
-        if(i%faixa1==0)printf("%c", 178);
-        else printf(" " );
+        if(i%2==faixa1)printf("%c", 178);
+        else printf(" ");
         printf("*");  
 
         printf("\n");
@@ -81,22 +81,22 @@ void printMatrix(char matrix[ROWS][COLUMNS],int faixa1)
 
 //desenhar carro
 
-    void drawCar(char matrix[ROWS][COLUMNS], Carro *barra, int simbolo){
+    void drawCar(char matrix[TRUE_ROWS][COLUMNS], Carro *barra, int simbolo){
 
         matrix[barra->i][barra->j] = simbolo;
          matrix[barra->i][barra->j+1] = simbolo;
          matrix[barra->i][barra->j-1] = simbolo;
          matrix[barra->i][barra->j+2] = simbolo;
          matrix[barra->i][barra->j-2] = simbolo;
-        if(barra->i-1>=0) matrix[barra->i-1][barra->j] = simbolo;
-        if(barra->i-2>=0) matrix[barra->i-2][barra->j] = simbolo;
-        if(barra->i-3>=0) matrix[barra->i-3][barra->j] = simbolo;
+        if(barra->i-1>=0 && barra->i-1<=ROWS-1) matrix[barra->i-1][barra->j] = simbolo;
+        if(barra->i-2>=0 && barra->i-2<=ROWS-1) matrix[barra->i-2][barra->j] = simbolo;
+        if(barra->i-3>=0 && barra->i-3<=ROWS-1) matrix[barra->i-3][barra->j] = simbolo;
         
-        if(barra->i-2>=0)matrix[barra->i-2][barra->j+1] = simbolo;
-        if(barra->i-2>=0)matrix[barra->i-2][barra->j-1] = simbolo;
-        if(barra->i-2>=0)matrix[barra->i-2][barra->j+2] = simbolo;
-        if(barra->i-2>=0)matrix[barra->i-2][barra->j-2] = simbolo;
-    
+        if(barra->i-2>=0 && barra->i-2<=ROWS-1){matrix[barra->i-2][barra->j+1] = simbolo;
+        matrix[barra->i-2][barra->j-1] = simbolo;
+        matrix[barra->i-2][barra->j+2] = simbolo;
+        matrix[barra->i-2][barra->j-2] = simbolo;
+        }
     }
         
        
