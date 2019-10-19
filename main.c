@@ -27,7 +27,7 @@ int main(){
 
     int tecla;
     
-    int faixa1 = PIXEL, faixa2 = EMPTY, aux;
+    int faixa1 = 2, faixa2 = 3, aux = 0;
     
     int troca;
 
@@ -45,14 +45,14 @@ int main(){
         #if DEBUG == 1
             printf("@ = (%d,%d)\n", jogador.i, jogador.j);
         #endif
-        
+            printf("FAIXA1 = %d, FAIXA 2 = %d)\n", faixa1 , faixa2);
         
         //desenha o carro
         drawCar(matrix, &jogador, PIXEL);
         drawCar(matrix, &competidor, PIXEL);
         
        // Sleep(100);
-        printMatrix(matrix, faixa1, faixa2);
+        printMatrix(matrix, faixa1);
         
         //APAGAR
         drawCar(matrix, &jogador, EMPTY);

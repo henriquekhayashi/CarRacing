@@ -32,7 +32,7 @@ void init(char matrix[ROWS][COLUMNS])
     do computador.
 */
 
-void printMatrix(char matrix[ROWS][COLUMNS],int faixa1, int faixa2)
+void printMatrix(char matrix[ROWS][COLUMNS],int faixa1)
 {
     int i,j;
     //borda de cima
@@ -62,8 +62,8 @@ void printMatrix(char matrix[ROWS][COLUMNS],int faixa1, int faixa2)
         }
 
         //print borda direita
-        if(i%2==0)printf("%c", faixa1);
-        else printf("%c", faixa2);
+        if(i%faixa1==0)printf("%c", 178);
+        else printf(" " );
         printf("*");  
 
         printf("\n");

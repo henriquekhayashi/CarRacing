@@ -50,6 +50,6 @@ void init(char matrix[ROWS][COLUMNS]);
     Mostra o conteúdo da matriz principal na tela
     do computador.
 */
-void printMatrix(char matrix[ROWS][COLUMNS], int faixa1, int faixa2);
+void printMatrix(char matrix[ROWS][COLUMNS], int faixa1);
 
 void drawCar(char matrix[ROWS][COLUMNS], Carro *barra, int simbolo);
