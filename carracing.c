@@ -46,12 +46,12 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
     printf("\n");
 
     //correr pelo y da matriz
-    for(i=0; i<TRUE_ROWS; i++)
+    for(i=0; i<ROWS; i++)
     {
         //print borda esquerda
         printf("\t\t\t\t\t");
         printf("*");
-        if(i%2==0)printf("%c", 178);
+        if(i%2==faixa1)printf("%c", 178);
         else printf(" ");
 
         //correr pelo x da matriz

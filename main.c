@@ -44,7 +44,7 @@ int main(){
         
         //print posição do @
         #if DEBUG == 1
-            printf("@ = (%d,%d)\n", competidor.i, competidor.j);
+            printf("Competidor = (%d,%d)\n", competidor.i, competidor.j);
         #endif
             printf("FAIXA1 = %d, FAIXA2 = %d)\n", faixa1 , faixa2);
         
@@ -58,7 +58,7 @@ int main(){
         //APAGAR
         drawCar(matrix, &jogador, EMPTY);
         drawCar(matrix, &competidor, EMPTY);
-        m = getch();
+        //m = getch();
         /*
         aux = faixa1;
         faixa1 = faixa2;
@@ -72,7 +72,7 @@ int main(){
         competidor.i++;
         if(competidor.i==TRUE_ROWS) competidor.i = 0;
 
-        int tecla;
+        //int tecla;
 
         if(kbhit()){
             tecla = getch();
