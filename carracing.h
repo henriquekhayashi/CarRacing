@@ -23,8 +23,11 @@ data:19/09/2019
 #define ARROWS 224
 #define LEFT 75
 #define RIGHT 77
+#define DOWN 80
+#define UP 72
 #define TECLA_A 97
 #define TECLA_D 100
+#define ENTER 13
 
 //Configurações de layou
 #define PIXEL 178
@@ -36,12 +39,28 @@ typedef struct{
     int i; //posição linhas da matriz
     int j; //posição colunas matriz
     
-    //int tipo; // o tipo de 7 possiveis
-
     int width; //largura
     int height; //altura
 }Carro;
 
+//Estrutura padrão de componentes
+typedef struct{
+    //Carro competidor;
+
+    int *i; //posição linhas da matriz
+    int *j; //posição colunas matriz
+    
+    int width; //largura
+    int height; //altura    
+    
+}CarroCompetidor;
+
+//score
+typedef struct{
+    int pontos; //pontos
+    char nome[30]; //nome do jogador
+      
+}Score;
 
 /*
     Inicializa a matriz principal com 'espaços vazios'
@@ -56,3 +75,13 @@ void init(char matrix[TRUE_ROWS][COLUMNS]);
 void printMatrix(char matrix[TRUE_ROWS][COLUMNS], int faixa1);
 
 void drawCar(char matrix[ROWS][COLUMNS], Carro *barra, int simbolo);
+
+void drawEnemy(char matrix[ROWS][COLUMNS], Carro barra, int simbolo);
+
+int collisionDetect( Carro barra, char matrix[ROWS][COLUMNS]);
+
+void gameOver();
+
+void menu();
+
+void score();

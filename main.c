@@ -21,6 +21,11 @@ int main(){
     competidor.height = 4; 
     competidor.width = 5;
 
+   /* CarroCompetidor a;
+
+    a.i=&competidor.i;
+    a.j=&competidor.j;*/
+
     //inicializando matriz
     init(matrix);
     int m;
@@ -31,14 +36,23 @@ int main(){
     
     int troca;
 
+    int game = 1;
+
+    int cont=0;
+
+    int velocidade=3;
+
+    //menu
+    menu();
+
     //apagar o cursor da tela
     ShowConsoleCursor(0);
    
     system("cls");
 
     //loop
-    while(1){ 
-        
+    while(game == 1){ 
+    ShowConsoleCursor(0);
         
             gotoxy(0,0);
         
@@ -50,14 +64,23 @@ int main(){
         
         //desenha o carro
         drawCar(matrix, &jogador, PIXEL);
-        drawCar(matrix, &competidor, PIXEL);
+       // drawCar(matrix, &competidor, PIXEL);
+        drawEnemy(matrix, competidor, PIXEL);
+        
         
         
         printMatrix(matrix, faixa1);
         
-        //APAGAR
+        if(collisionDetect(jogador, matrix) ){
+            getch();
+             game = 0;
+        }
+           //APAGAR
         drawCar(matrix, &jogador, EMPTY);
-        drawCar(matrix, &competidor, EMPTY);
+        //drawCar(matrix, &competidor, EMPTY);
+        drawEnemy(matrix, competidor, EMPTY);
+        
+       
         //m = getch();
         /*
         aux = faixa1;
@@ -65,12 +88,23 @@ int main(){
         faixa2 = aux;
         */
 
-        if(faixa1 == 0) faixa1 = 1;
-        else faixa1 = 0;
+       /* if(faixa1 == 0) faixa1 = 1;
+        else faixa1 = 0;*/
 
-        //mover o competidor para baixo na tela 
-        competidor.i++;
-        if(competidor.i==TRUE_ROWS) competidor.i = 0;
+        
+        
+         if(cont%velocidade==0){
+            //alternar animacao estrada
+            if(faixa1 == 0) faixa1 = 1;
+                else faixa1 = 0;
+
+            //mover o competidor para baixo na tela
+            competidor.i++;
+            if(competidor.i==TRUE_ROWS+20) competidor.i = 0;     
+            }
+        
+        
+      
 
         //int tecla;
 
@@ -98,8 +132,15 @@ int main(){
             break;
             case TECLA_D: 
                 if(jogador.j + jogador.width/2 < COLUMNS-1)jogador.j+=3;
-        
-    }
+            
+            case 'v':
+                if(velocidade==3){
+                    velocidade = 1;
+                }else{
+                    velocidade = 3;
+                }
+            break;
+        }
 
     // sair com esc
     if (tecla == ESC) break;
@@ -107,8 +148,14 @@ int main(){
     //apaga tecla
     tecla = 0;
 
-    
+    cont++;
     }
+
+
+    //gotoxy(0,0);
+    system("cls");
+    gameOver();
+    system("pause");
 
     return 0;
 }
