@@ -240,15 +240,16 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
         FILE *f, *g;
         Score x, z;
         int i, tecla, pos, s =0;
-
-        while(tecla!=0){
+         f = fopen ("highscore.bin","ab");
+         fclose(f);
+        while(tecla!='c'){
         //abrir arquivo highscore.bin para adição de dados
         //f = fopen ("highscore.bin","ab");
         //adicionar dados nas struc score
         
 
         for(i=0; i<3;i++){
-            printf("Digite o nome: ");
+            printf("%d - Digite o nome: ", i);
             gets(x.nome);
         
             printf("Digite pontos: ");
@@ -258,13 +259,17 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
              g = fopen ("highscore.bin","rb");
         
         //ver o tamanho    
+            printf("vertamanho\n ");
             fseek (g, 0, SEEK_END);
             pos=ftell(g);
+            printf("%d\n ", pos);
             if(pos >= sizeof(x)*5);{
-
+                
+                printf("lertodosscores\n ");
                 //ler todos os scores dentro do arquivo
                 while(1){
-            
+                    
+                    printf("comparar\n ");
                     //comparar
                     fread(&z, sizeof(Carro),1,g);
                     if (feof(g)) break;
@@ -275,7 +280,8 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
                         break;
                     }
                 }
-                if(s!=1) break;
+                printf("s!=1\n ");
+                //if(s!=1) break;
             }
         //adicionar para o arquivo
             printf("ok?");
