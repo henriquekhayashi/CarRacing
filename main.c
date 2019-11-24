@@ -1,6 +1,6 @@
 #include "carracing.h"
 #include "display.h"
-#include <windows.h>
+
 #define DEBUG 1
 
 int main(){
@@ -10,7 +10,7 @@ int main(){
     Carro jogador;
 
     jogador.i=ROWS-1;
-    jogador.j=COLUMNS/2;
+    jogador.j=COLUMNS-3;
     jogador.height = 4; 
     jogador.width = 5;
 
@@ -41,6 +41,8 @@ int main(){
     int cont=0;
 
     int velocidade=3;
+    
+    int posicao[3];
 
     //menu
     menu();
@@ -49,6 +51,10 @@ int main(){
     ShowConsoleCursor(0);
    
     system("cls");
+
+    srand(time(NULL));
+
+    random(&posicao);
 
     //loop
     while(game == 1){ 
@@ -62,10 +68,12 @@ int main(){
         #endif
             printf("FAIXA1 = %d, FAIXA2 = %d)\n", faixa1 , faixa2);
         
+        
+
         //desenha o carro
         drawCar(matrix, &jogador, PIXEL);
-       // drawCar(matrix, &competidor, PIXEL);
-        drawEnemy(matrix, competidor, PIXEL);
+        //desenhar inimigos
+        drawEnemy(matrix, competidor, PIXEL, posicao);
         
         
         
@@ -77,8 +85,7 @@ int main(){
         }
            //APAGAR
         drawCar(matrix, &jogador, EMPTY);
-        //drawCar(matrix, &competidor, EMPTY);
-        drawEnemy(matrix, competidor, EMPTY);
+        drawEnemy(matrix, competidor, EMPTY, posicao);
         
        
         //m = getch();
@@ -100,7 +107,11 @@ int main(){
 
             //mover o competidor para baixo na tela
             competidor.i++;
-            if(competidor.i==TRUE_ROWS+20) competidor.i = 0;     
+            if(competidor.i==TRUE_ROWS+24){ 
+                competidor.i = 0;     
+                //sortear posicao dos inimigos
+                random(&posicao);
+            }
             }
         
         
@@ -118,20 +129,20 @@ int main(){
                 if(kbhit()) tecla = getch();
                     switch(tecla){
                         case LEFT: 
-                            if(jogador.j - jogador.width/2 > 1 )jogador.j-=3;
-                            else if(jogador.j - jogador.width/2 > 0 ) jogador.j--;
+                            if(jogador.j - jogador.width/2 > 1 )jogador.j-=6;
+                            
                         break;
                         case RIGHT: 
-                            if(jogador.j + jogador.width/2 < COLUMNS-1)jogador.j+=3;
+                            if(jogador.j + jogador.width/2 < COLUMNS-1)jogador.j+=6;
                         break;
                     }
             break;
             case TECLA_A: 
-                if(jogador.j - jogador.width/2 > 1 )jogador.j-=3;
-                            else if(jogador.j - jogador.width/2 > 0 ) jogador.j--;
+                if(jogador.j - jogador.width/2 > 1 )jogador.j-=6;
+                            
             break;
             case TECLA_D: 
-                if(jogador.j + jogador.width/2 < COLUMNS-1)jogador.j+=3;
+                if(jogador.j + jogador.width/2 < COLUMNS-1)jogador.j+=6;
             
             case 'v':
                 if(velocidade==3){

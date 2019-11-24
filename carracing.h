@@ -10,6 +10,8 @@ data:19/09/2019
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <time.h>
+#include <windows.h>
 
 //Configuração das dimensoes da matriz principal do jogo
 #define COLUMNS 11
@@ -76,7 +78,7 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS], int faixa1);
 
 void drawCar(char matrix[ROWS][COLUMNS], Carro *barra, int simbolo);
 
-void drawEnemy(char matrix[ROWS][COLUMNS], Carro barra, int simbolo);
+void drawEnemy(char matrix[ROWS][COLUMNS], Carro barra, int simbolo, int posicao[3]);
 
 int collisionDetect( Carro barra, char matrix[ROWS][COLUMNS]);
 
@@ -85,3 +87,5 @@ void gameOver();
 void menu();
 
 void score();
+
+void random(int (*posicao)[3]);
