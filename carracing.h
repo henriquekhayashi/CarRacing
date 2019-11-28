@@ -64,6 +64,16 @@ typedef struct{
       
 }Score;
 
+//save
+typedef struct{
+    int cont;
+    int jogador, competidor, jogadorpos;
+    int posicao[3];
+    int score;
+    int velocidade;
+
+}Save;
+
 /*
     Inicializa a matriz principal com 'espaços vazios'
 
@@ -82,10 +92,14 @@ void drawEnemy(char matrix[ROWS][COLUMNS], Carro barra, int simbolo, int posicao
 
 int collisionDetect( Carro barra, char matrix[ROWS][COLUMNS]);
 
-void gameOver();
+void gameOver(int score);
 
 void menu();
 
 void score();
 
 void random(int (*posicao)[3]);
+
+void salvarJogo(Carro jogador, Carro competidor, int posicao[3], int score);
+
+int abrirSave(Carro *jogador, Carro *competidor, int posicao[3], int *score);

@@ -5,7 +5,7 @@
 
 int main(){
 
-    char matrix [TRUE_ROWS][COLUMNS];
+    char matrix [ROWS][COLUMNS];
 
     Carro jogador;
 
@@ -28,6 +28,7 @@ int main(){
 
     //inicializando matriz
     init(matrix);
+
     int m;
 
     int tecla;
@@ -44,18 +45,26 @@ int main(){
     
     int posicao[3];
 
+    int score = 0;
+
+    int fase;
+
     //menu
-    menu();
+    
 
     //apagar o cursor da tela
     ShowConsoleCursor(0);
-   
     system("cls");
-
     srand(time(NULL));
 
-    random(&posicao);
+    
 
+    if(!abrirSave(&jogador, &competidor, posicao, &score)){
+         menu();   
+        random(&posicao);
+    } 
+
+    system("cls");
     //loop
     while(game == 1){ 
     ShowConsoleCursor(0);
@@ -64,9 +73,11 @@ int main(){
         
         //print posição do @
         #if DEBUG == 1
-            printf("Competidor = (%d,%d)\n", competidor.i, competidor.j);
+            printf("Competidor = (%d,%d) | cont: %d\n", competidor.i, competidor.j, cont);
         #endif
             printf("FAIXA1 = %d, FAIXA2 = %d)\n", faixa1 , faixa2);
+            printf("Score: %d \n", score);
+            printf("Fase: %d \n", 1);
         
         
 
@@ -101,13 +112,19 @@ int main(){
         
         
          if(cont%velocidade==0){
+
+            //score
+            if(competidor.i==ROWS+3) score++;
+            else if(competidor.i==ROWS+17) score++;
+            else if(competidor.i==ROWS+31) score++;
+            
             //alternar animacao estrada
             if(faixa1 == 0) faixa1 = 1;
                 else faixa1 = 0;
 
             //mover o competidor para baixo na tela
             competidor.i++;
-            if(competidor.i==TRUE_ROWS+24){ 
+            if(competidor.i==ROWS+32){ 
                 competidor.i = 0;     
                 //sortear posicao dos inimigos
                 random(&posicao);
@@ -143,29 +160,37 @@ int main(){
             break;
             case TECLA_D: 
                 if(jogador.j + jogador.width/2 < COLUMNS-1)jogador.j+=6;
-            
+            break;
+
+                   
             case 'v':
-                if(velocidade==3){
-                    velocidade = 1;
-                }else{
-                    velocidade = 3;
-                }
+
+                    if(cont < 800) 
+                    if(velocidade==3){
+                        velocidade = 1;
+                    }else velocidade = 3;
+                
             break;
         }
 
     // sair com esc
-    if (tecla == ESC) break;
+    if (tecla == ESC){
+        salvarJogo(jogador, competidor, posicao, score);
+         return 0;
+    }
 
     //apaga tecla
     tecla = 0;
 
     cont++;
+    if(cont > 800) velocidade = 1;
+    
     }
 
 
     //gotoxy(0,0);
     system("cls");
-    gameOver();
+    gameOver(score);
     system("pause");
 
     return 0;

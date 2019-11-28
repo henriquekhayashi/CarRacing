@@ -15,11 +15,11 @@ data:19/09/2019
 
 */
 
-void init(char matrix[TRUE_ROWS][COLUMNS])
+void init(char matrix[ROWS][COLUMNS])
 {
     int i,j;
 
-    for(i=0; i<TRUE_ROWS; i++)
+    for(i=0; i<ROWS; i++)
     {
         for(j=0; j<COLUMNS; j++)
         {
@@ -33,7 +33,7 @@ void init(char matrix[TRUE_ROWS][COLUMNS])
     do computador.
 */
 
-void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
+void printMatrix(char matrix[ROWS][COLUMNS],int faixa1)
 {
     int i,j;
     //borda de cima
@@ -82,7 +82,7 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
 
 //desenhar carro
 
-    void drawCar(char matrix[TRUE_ROWS][COLUMNS], Carro *barra, int simbolo){
+    void drawCar(char matrix[ROWS][COLUMNS], Carro *barra, int simbolo){
         
         /*
         mapa do carro
@@ -129,15 +129,15 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
     
         
     void drawEnemy(char matrix[ROWS][COLUMNS], Carro barra, int simbolo, int posicao[3]){
-        Carro a = barra;
-        a.j = posicao[0];
-        drawCar(matrix, &a, simbolo);
-        a.i -= 14;
-        a.j = posicao[1];
-        drawCar(matrix, &a, simbolo);
-        a.i -= 14;
-        a.j = posicao[2];
-        drawCar(matrix, &a, simbolo);
+        
+        barra.j = posicao[0];
+        if(barra.i<ROWS+4||barra.i>=0)drawCar(matrix, &barra, simbolo);
+        barra.i -= 14;
+        barra.j = posicao[1];
+        drawCar(matrix, &barra, simbolo);
+        barra.i -= 14;
+        barra.j = posicao[2];
+        drawCar(matrix, &barra, simbolo);
 
     }
 
@@ -158,9 +158,87 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
         else return 0;
     }       
 
-    void gameOver(){
-        
+    void gameOver(score){
+        Score pontos, z;
+        FILE *f, *g;
+        int i = 0, tecla, pos, s =0, aux;
+
+        f = fopen ("highscore.bin","ab");
+         fclose(f);
+
+        pontos.pontos = score;
         printf("GAME OVER\n");
+        printf("score: %d\n", pontos.pontos);
+        printf("nome: ");
+        gets(pontos.nome);
+
+        g = fopen ("highscore.bin","rb");
+        
+        //ver o tamanho    
+            printf("vertamanho/pos: ");
+            fseek (g, 0, SEEK_END);
+            pos=ftell(g);
+            printf("%d\n ", pos);
+            printf("size of score*3: %d\n ", sizeof(Score)*3);
+            printf("size of x*3: %d\n ", sizeof(pontos)*3);
+            printf("size of x: %d\n ", sizeof(pontos));
+            
+            aux = pontos.pontos;
+
+            //verifiar quantidade de pontuações na lista
+            if(pos >= (sizeof(Score)*3)) s =1;
+                
+                printf("lertodosscores\n ");
+
+                //colocar de volta pro começo do arquivo
+                fseek (g, 0, SEEK_SET);
+
+                //comparar nova pontuacao com a lista
+                //ler todos os scores dentro do arquivo
+                while(1){
+                    
+                    printf("comparar\n ");
+                    //comparar
+                    
+                    fread(&z, sizeof(Score),1,g);
+                    
+                    printf("z.pontos: %d\n ", z.pontos);
+                    
+                    if (z.pontos < aux){ 
+                        aux=z.pontos;
+                        printf("aux == %d", aux);
+                        pos = ftell(g)-sizeof(Score);
+                        printf("Nome: %s Score: %d\n",z.nome, z.pontos); 
+                       // s = 1;
+                       // i = 3;
+                    }
+
+                    printf("isto acontece ?\n ");
+
+                    if (feof(g)) break;
+
+                    
+                }
+                printf("\n\ns!=1 n maior\n ");
+               // i=3;
+                //if(s!=1) break;
+            
+        //adicionar para o arquivo
+            printf("\nok?\n");
+            
+            fclose(g);
+            if(s==1){
+            f = fopen ("highscore.bin","rb+");
+            fseek (f , pos, SEEK_SET);
+            printf("o lugar certo");
+            }
+            else f = fopen ("highscore.bin","ab");
+            fwrite(&pontos,sizeof(Score),1,f);
+            fclose(f);
+            
+        //}
+        
+        printf("\npos: %d", pos);
     }
 
     void menu(){
@@ -254,94 +332,29 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
         Score x, z;
         int i = 0, tecla, pos, s =0, aux;
 
-         f = fopen ("highscore.bin","ab");
-         fclose(f);
+         
 
-        while(tecla!='c'){
+        
         //abrir arquivo highscore.bin para adição de dados
         //f = fopen ("highscore.bin","ab");
         //adicionar dados nas struc score
         
 
        // for(i=0; i<3;i++){
-            printf("\n%d - Digite o nome: ", i);
+            /*printf("\n%d - Digite o nome: ", i);
             gets(x.nome);
         
             printf("Digite pontos: ");
             scanf("%d",&x.pontos);
             fflush(stdin);
-            
-             g = fopen ("highscore.bin","rb");
-        
-        //ver o tamanho    
-            printf("vertamanho/pos: ");
-            fseek (g, 0, SEEK_END);
-            pos=ftell(g);
-            printf("%d\n ", pos);
-            printf("size of score*3: %d\n ", sizeof(Score)*3);
-            printf("size of x*3: %d\n ", sizeof(x)*3);
-            printf("size of x: %d\n ", sizeof(x));
-            
-            aux = x.pontos;
-
-            if(pos >= (sizeof(Score)*3)) s =1;
-                
-                printf("lertodosscores\n ");
-
-                //colocar de volta pro começo do arquivo
-                fseek (g, 0, SEEK_SET);
-
-                //ler todos os scores dentro do arquivo
-                while(1){
-                    
-                    printf("comparar\n ");
-                    //comparar
-                    
-                    fread(&z, sizeof(Score),1,g);
-                    
-                    printf("z.pontos: %d\n ", z.pontos);
-                    
-                    if (z.pontos < aux){ 
-                        aux=z.pontos;
-                        printf("aux == %d", aux);
-                        pos = ftell(g)-sizeof(Score);
-                        printf("Nome: %s Score: %d\n",z.nome, z.pontos); 
-                       // s = 1;
-                       // i = 3;
-                    }
-
-                    printf("isto acontece ?\n ");
-
-                    if (feof(g)) break;
-
-                    
-                }
-                printf("\n\ns!=1 n maior\n ");
-               // i=3;
-                //if(s!=1) break;
-            
-        //adicionar para o arquivo
-            printf("\nok?\n");
-            
-            fclose(g);
-            if(s==1){
-            f = fopen ("highscore.bin","rb+");
-            fseek (f , pos, SEEK_SET);
-            printf("o lugar certo");
-            }
-            else {f = fopen ("highscore.bin","ab");
-            fwrite(&x,sizeof(Score),1,f);
-            fclose(f);
-            }
-        //}
-        
-        printf("\npos: %d", pos);
+            */
+             
         
         
 
         //abrir arquivo highscore.bin para leitura
         f = fopen ("highscore.bin","rb");
-        
+        if(f != NULL){
         printf("\n");
 
         //ler todos os scores dentro do arquivo
@@ -351,12 +364,67 @@ void printMatrix(char matrix[TRUE_ROWS][COLUMNS],int faixa1)
         
             printf("Nome: %s Score: %d\n",x.nome, x.pontos); 
 	    }
-
+        }
         fclose(f);
         
 
-        }        
+            
 
     }
 
+    void salvarJogo(Carro jogador, Carro competidor, int posicao[3], int score){
+        FILE * f;
+        Save a;
+        a.cont = 1;
+        a.jogador = jogador.i;
+        a.jogadorpos = jogador.j;
+        a.competidor = competidor.i;
+        a.posicao[0] = posicao[0];
+        a.posicao[1] = posicao[1];
+        a.posicao[2] = posicao[2];
+        a.score = score;
+
+         f = fopen ("save.bin","ab");
+         fclose(f);
+
+        f = fopen ("save.bin","rb+");
+        fseek (f , 0, SEEK_SET);
+        fwrite(&a,sizeof(Save),1,f);
+
+        fclose(f);
+    }
+
+    int abrirSave(Carro *jogador, Carro *competidor, int posicao[3] , int *score){
+        FILE * f;
+        Save a;
+        int retorno =0;
+        
+        f = fopen ("save.bin","ab");
+        
+        if(f != NULL){
+
+         
+
+        f = fopen ("save.bin","rb+");
+        fread(&a, sizeof(Save),1,f);
+        if(a.cont == 1){
+        jogador->i = a.jogador;
+        jogador->j = a.jogadorpos;
+        competidor->i = a.competidor;
+        posicao[0] = a.posicao[0];
+        posicao[1] = a.posicao[1];
+        posicao[2] = a.posicao[2];
+        *score = a.score;
+        
+        retorno = a.cont;
+        a.cont = 0;
+        fseek (f , 0, SEEK_SET);
+        fwrite(&a,sizeof(Save),1,f);
+        }
+
+        }
+        fclose(f);
+
+        return retorno;
+    }
     
