@@ -25,11 +25,19 @@ data:19/09/2019
 #define ARROWS 224
 #define LEFT 75
 #define RIGHT 77
+
+#define TECLA_A 97
+#define TECLA_AUP 65
+#define TECLA_D 100
+#define TECLA_DUP 68
+#define TECLA_W 119
+#define TECLA_WUP 87
+#define TECLA_S 115
+#define TECLA_SUP 83
 #define DOWN 80
 #define UP 72
-#define TECLA_A 97
-#define TECLA_D 100
 #define ENTER 13
+#define SPACE 32
 
 //Configurações de layou
 #define PIXEL 178
@@ -69,8 +77,9 @@ typedef struct{
     int cont;
     int jogador, competidor, jogadorpos;
     int posicao[3];
-    int score;
+    Score score;
     int velocidade;
+    int contfase;
 
 }Save;
 
@@ -90,16 +99,22 @@ void drawCar(char matrix[ROWS][COLUMNS], Carro *barra, int simbolo);
 
 void drawEnemy(char matrix[ROWS][COLUMNS], Carro barra, int simbolo, int posicao[3]);
 
-int collisionDetect( Carro barra, char matrix[ROWS][COLUMNS]);
+int collisionCheck( Carro barra, char matrix[ROWS][COLUMNS]);
 
-void gameOver(int score);
+int collisionCheckSides(Carro barra, char matrix[ROWS][COLUMNS], int direcao);
 
-void menu();
+//Fim de jogo e salvar pontuação
+void gameOver(Score score);
+
+void menu(int *game);
 
 void score();
 
+//Sortear posição dos oponentes
 void random(int (*posicao)[3]);
 
-void salvarJogo(Carro jogador, Carro competidor, int posicao[3], int score);
+//Salvar jogo
+void salvarJogo(Carro jogador, Carro competidor, int posicao[3], Score score, int contfase);
 
-int abrirSave(Carro *jogador, Carro *competidor, int posicao[3], int *score);
+//Continuar o jogo salvo
+int abrirSave(Carro *jogador, Carro *competidor, int posicao[3], Score *score, int*contfase);
