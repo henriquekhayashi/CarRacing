@@ -17,3 +17,10 @@ void ShowConsoleCursor(int showFlag)
     cursorInfo.bVisible = showFlag; // set the cursor visibility
     SetConsoleCursorInfo(out, &cursorInfo);
 }
+
+COORD GetCursorPosition() {
+   HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+   CONSOLE_SCREEN_BUFFER_INFO bufferInfo;
+   GetConsoleScreenBufferInfo(h, &bufferInfo);
+   return bufferInfo.dwCursorPosition;
+}
